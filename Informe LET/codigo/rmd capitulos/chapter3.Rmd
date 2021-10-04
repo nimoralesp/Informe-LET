@@ -1,0 +1,28 @@
+---
+title: "chapter3"
+author: "Nicolás Morales"
+date: "10/5/2021"
+output: pdf_document
+bibliography: olea.bib
+---
+
+\section*{Información}
+
+Tomando como referencia lo realizado en @saito2018mortgage, se recopiló información macro-economica desde el Banco Central de Chile\footnote{https://www.bcentral.cl} y de la Comisión para el Mercado Financieron de Chile (CMF)\footnote{ http://www.cmfchile.cl}. 
+
+\begin{itemize}
+    \item BCU10: Bonos bullet emitidos por el banco central a plazos de 10 años.
+    
+    \item IMACEC: Índice mensual de actividad económica, ponderación de ciertos indicadores con la participación de distintas actividades económicas en el PIB del año anterior.
+    
+    \item Tasa de Desempleo: Tasa nacional de desocupación entregada por el INE mediante la Encuesta Nacional de Empleo (ENE).
+    
+    \item Tasa de Interés Interbancaria (TIB):Tasa promedio ponderada diaria de préstamos de reservas bancarias entre bancos, sin colateral.
+    
+    \item Tasa de Mercado (TM): Promedio del costo porcentual de captación de los recursos durante el año, más los puntos porcentuales que corresponden a los costos de operación de las instituciones financieras.
+    
+    \item PIB: Producto Interno Bruto, valor total de los bienes y servicios finales (esto es, obtenidos por el consumidor final) producidos por el país, se obtiene a partir de la agregación temporal del IMACEC desestacionalizado.
+
+\end{itemize}
+
+Con estas información se procedió a modelar la tasa de prepago de créditos hipotecarios en un banco de la plaza.
