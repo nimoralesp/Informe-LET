@@ -1,0 +1,12 @@
+---
+title: "Introducción"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Los créditos hipotecarios son contratos entre dos entidades, generalmente entre una institución financiera y personas naturales o empresas, con la finalidad de permitir a la segunda parte la obtención de una cierta suma de dinero, por ejemplo para el financiamiento de una compra inmobiliaria, automotriz, entre otros bienes de gran valor. Éstos contratos estipulan por una parte un determinado plazo y tasa de interés para la devolución del dinero; por otra parte, se establecen ciertas flexibilidades, entre las cuales destaca la posibilidad del prepago parcial o total del crédito recibido (NOTA AL PIE: ¿QUÉ ES PREPAGO?). 
+Ésta posibilidad de prepago tiene ciertas implicancias para los emisores de créditos, ya que el modelamiento de los prepagos es crucial para predecir potenciales pérdidas, debido a la incertidumbre de su duración a priori respecto a su duración real. 
+El objetivo de este trabajo es modelar la tasa de prepago mensual para un cartera de clientes basado en información histórica y variables exógenas que expliquen la evolución temporal de esta tasa, y que sirva como input para generar pronósticos futuros.
