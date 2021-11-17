@@ -1,18 +1,17 @@
 ---
 date: "16-11-2021"
 output: html_document
-keep_tex: yes
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r, include=F}
-#install.packages("openxlsx")
-#install.packages("corrplot")
+library("dplyr")    
+setwd("C:/Users/nicom/Downloads/Informe-LET/datos")
 library("openxlsx")
 library("corrplot")
+library("MASS")
+library("kableExtra")
+library("car")
+
 Data = read.xlsx('SMM.xlsx')
 Data$BCU10 = Data$BCU10E
 DF = na.omit(Data)
@@ -88,3 +87,70 @@ corrplot(cors, type = "lower", diag = F,  cl.pos = "n", method = "square")
 ```
 
 Nótese en primer lugar que existe poca correlación entre la variable objetivo (SMM) y las demás variables disponibles. En segundo lugar, es necesario poner atención a algunas correlaciones muy potentes entre regresores (como IMACEC y PIB), lo cual si bien es esperable tratándose de variables macroeconómicas, advierten sobre un posible problema de multicolinealidad entre ellas. 
+
+## Modelo lineal para SMM
+
+Los posibles modelos lineales construidos se muestran en Tabla @tab_reg. Los modelos $2-4$ fueron construidos a partir de retirar los regresores no significativos, mientras que el quinto fue construido mediante métodos \textit{stepwise} (cabe mencionar que tanto el método \textit{both} como \textit{backward} entregaron como resultado el mismo modelo). Como se muestra en la misma, el quinto modelo marca mejor ajuste por el criterio de $R^2$ y un mejor $AIC$. La columna N.S. indica la cantidad de regresores \textbf{no significativos} sobre el total de regresores del modelo, favorablemente el modelo mencionado no posee coeficientes no significativos, por lo que es el modelo más idóneo de entre las opciones presentadas. 
+
+|Modelo|Regresores|
+|:--:|:-----:|
+|(1)|Todas las variables, incluyendo meses más intercepto|
+|(2)|Desempleo, IMACEC, PIB, TM, Interbancaria, BCU10, Ene, Feb, Abr, May, Jul, Ago, Oct, Nov|
+|(3)|Intercepto, TM, BCU10, Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic|
+|(4)|Intercepto, TM, BCU10, ENE, ABR, MAY, JUL, AGO, OCT, NOV|
+|(5)|Intercepto, PIB, TM, BCU10, ENE, FEB, ABR, MAY, JUL, AGO, OCT, NOV|
+
+```{r, results='hide'}
+fit01 = lm(SMM ~ ., data = DF)
+datos01 = summary(fit01)
+
+fit02 = lm(SMM ~ .-DIC-SEPT-JUN-MAR, data = DF)
+datos02 = summary(fit02)
+
+fit03 = lm(SMM ~ .-DESEMPLEO-IMACEC-PIB-Interbancaria, data = DF)
+datos03 = summary(fit03)
+
+fit04 = lm(SMM ~ 1 +TM +BCU10 +ENE +ABR +MAY +JUL +AGO +OCT +NOV, data = DF)
+datos04 = summary(fit04)
+
+step01 = stepAIC(fit01, direction = "backward", trace = FALSE)
+d01 = summary(step01)
+
+step02 = stepAIC(fit01, direction = "both", trace = FALSE)
+d02 = summary(step02)
+
+fit05 = lm(SMM ~ PIB + ENE + FEB + ABR + MAY + JUL + AGO + OCT + NOV + BCU10, data = DF)
+d03 = summary(fit05)
+```
+
+
+|Modelo|R2|R2aj|AIC|NS|
+|:---:|:---:|:---:|:---:|:---:|
+|(1)|	0.39336|	0.32551|	-1533.501|	11/19|
+|(2)|	0.38897	|0.33378|	-1538.276|	5/15|
+|(3)|	0.37906	|0.32732|	-1537.542	|5/15|
+|(4)|	0.34989	|0.31332|	-1537.737|	0/10|
+|(5)|	0.38792	|0.34531|	-1543.983	|0/12|
+
+Como se muestra en Tabla \ref{tab:metricas} el quinto modelo marca mejor ajuste por el criterio de $R^2$ y un mejor $AIC$. La columna N.S. indica la cantidad de regresores \textbf{no significativos} sobre el total de regresores del modelo. 
+
+
+
+A pesar de lo señalado anteriormente, un análisis de multicolinealidad al modelo seleccionado, arroja que existe un problema de colinealidad. Éste análisis se hará mediante el cálculo del factor de inflación de la varianza VIF por sus siglas en inglés (para mayor información véase  \cite{seber2012linear}), el cual se define  concretamente entre TM y BCU10:
+
+```{r}
+vif(step01)
+```
+
+Al construir un nuevo modelo retirando el regresor TM y compararlo con los preexistentes, se obtiene que sus métricas son: $R^2 = 0.37384$, $R_{aj}^2 = 0.33446$, $AIC = -1542.118$, NS: $0/11$. Son cercanas a las del anterior modelo y al aplicar nuevamente el análisis de colinealidad concluimos que está libre de ésta,  por lo que finalmente se selecciona éste como modelo final (Ver Código 2)
+
+```{r}
+step01
+```
+
+## Modelo SARIMA para los residuos
+
+
+
+
+
