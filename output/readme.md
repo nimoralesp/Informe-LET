@@ -6,4 +6,4 @@ https://nimoralesp.github.io/Informe-LET/output/0-introduccion.html
 
 ## Desarrollo:
 
-https://nimoralesp.github.io/Informe-LET/output/1-desarrollo.html
+https://nimoralesp.github.io/Informe-LET/output/1-desarrollo2.html
