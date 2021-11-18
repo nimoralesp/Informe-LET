@@ -92,6 +92,26 @@ Nótese en primer lugar que existe poca correlación entre la variable objetivo 
 
 Los posibles modelos lineales construidos se muestran en Tabla @tab_reg. Los modelos $2-4$ fueron construidos a partir de retirar los regresores no significativos, mientras que el quinto fue construido mediante métodos \textit{stepwise} (cabe mencionar que tanto el método \textit{both} como \textit{backward} entregaron como resultado el mismo modelo). Como se muestra en la misma, el quinto modelo marca mejor ajuste por el criterio de $R^2$ y un mejor $AIC$. La columna N.S. indica la cantidad de regresores \textbf{no significativos} sobre el total de regresores del modelo, favorablemente el modelo mencionado no posee coeficientes no significativos, por lo que es el modelo más idóneo de entre las opciones presentadas. 
 
+```{r}
+text_tbl <- data.frame(
+Modelo = c("(1)", "(2)", "(3)",  "(4)", "(5)"),
+Regresores = c(
+"Todas las variables, incluyendo meses más intercepto",
+"Desempleo, IMACEC, PIB, TM, Interbancaria, BCU10, Ene, Feb, Abr, May, Jul, Ago, Oct, Nov",
+"Intercepto, TM, BCU10, Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic",
+"Intercepto, TM, BCU10, ENE, ABR, MAY, JUL, AGO, OCT, NOV",
+"Intercepto, PIB, TM, BCU10, ENE, FEB, ABR, MAY, JUL, AGO, OCT, NOV"
+)
+)
+kable(text_tbl, "latex", booktabs = T, linesep = "\\addlinespace", 
+      caption = "Modelos lineales candidatos\\label{tab:tab_reg}"
+      ) %>%
+kable_styling(full_width = F) %>%
+column_spec(1, bold = T, color = "red", width = "15mm") %>%
+column_spec(2, width = "55mm")
+
+```
+
 |Modelo|Regresores|
 |:--:|:-----:|
 |(1)|Todas las variables, incluyendo meses más intercepto|
