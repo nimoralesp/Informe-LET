@@ -1,0 +1,69 @@
+---
+output: html_document
+bibliography: olea.bib  
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("dplyr")    
+setwd("C:/Users/nicom/Downloads/Informe-LET/datos")
+library("openxlsx")
+library("corrplot")
+library("MASS")
+library("kableExtra")
+library("car")
+
+Data = read.xlsx('SMM.xlsx')
+Data$BCU10 = Data$BCU10E
+DF = na.omit(Data)
+DF$TASA_HIP = NULL
+DF$AÑO = NULL
+DF$MES = NULL
+DF$BCU10E = NULL
+#head(DF)
+attach(DF)
+```
+
+# Metodología: algunas definiciones
+
+En la literatura suele referirse a los prepagos mediante un indicador denominado
+Conditional Prepayment Rate (${CPR}_t$) que surge de anualizar\footnote{Se realizan los cálculos asumiendo que la cantidad obtenida en el mes observado será constante para todos los meses del año.} la tasa de prepago observada en el mes $t$, denominada Single Monthly Mortality Rate (${SMM}_t$):
+$${SMM}_t = \frac{\sum^{n}_{i=1}{Prepago}_{it}}{\sum^{n}_{i=1}{({Saldo}_{it} - {Amortización}_{it})}}$$
+donde $n$ representa el número de préstamos vigentes en el mes $t$, ${Prepago}_{it}$ el
+monto pre-pagado (total o parcial) por cada crédito, ${Saldo}_{it}$ el saldo de deuda al
+inicio del mes y ${Amortización}_{it}$ la amortización (parte ya pagada de la deuda) programada para dicho período. La anualización de la SMM se obtiene de la siguiente expresión:
+$${CPR}_t = 1 - (1-{SMM}_t)^{12}$$
+Las series históricas de prepagos pueden ser explicadas también por factores exógenos, como variables financieras y macro-económicas. En el presente informe se ajustarán distintos modelos lineales para el $SMM$ mensual, con el objetivo de comparar sus siguientes características:
+
++ *Significancia*: Definida para cada variable predictora considerada en un modelo, se dice que ésta es significativa si su *valor-p* es menor al nivel de significación previamente establecido (en el presente informe se considerará el valor $\alpha 0.05$ por es el más ampliamente utilizado). Una posible interpretación es que si una variable **no** es sifnificativa, entonces su efecto sobre la respuesta es trivial y no será necesario de considerar. Para efectos de comparación, se evaluará para cada modelo una métrica llamada N.S. (No Significativas) que contabiliza la proporción de variables consideradas en el modelo que según este criterio no significan un aporte.
+
++ Calidad de ajuste: También llamada en la literatura como *bondad* de ajuste, es una medida de cuán bien funciona el modelo para predecir los valores de la respuesta. Se suelen usar algunas métricas estándar, en el presente informe se considerarán $R^2$, $R^2_{ajustado}$ y $AIC$.
+
++ Multi-colinealidad: En términos estadísticos se define como una medida de dependencia lineal entre variables predictoras. Para el lector no especializado se ofrece la siguiente interpretación: Si bien cada factor exógeno contribuye con información sobre el índice $SMM$, en caso de que algunos de ellos dependan de otros, habrá información redundante, lo cual dificultará el correcto funcionamiento del modelo. Para evaluar la multicolinealidad en un modelo se utiliza una métrica llamada $VIF$ (*variance inflation factor* por sus siglas en inglés) la cual al calcularse para cada factor, indicará que existe un problema de m.c. si su valor es mayor a $10$ (por convención).
+
+
+# Variables predictoras: información
+Tomando como referencia lo realizado en @saito2018mortgage, se recopiló información macro-economica desde el Banco Central de Chile (BC)\footnote{https://www.bcentral.cl} y de la Comisión para el Mercado Financiero de Chile (CMF)\footnote{ http://www.cmfchile.cl}. Se descargaron las series en formato excel y se empastaron a la base de datos sin cambios.
+
++ SMM: Datos correspondientes al índice calculado mensualmente entre los años 2003-2019.
+
++ BCU10: Bonos bullet emitidos por el banco central a plazos de 10 años. Información extraída desde el banco central.
+    
++ IMACEC: Índice mensual de actividad económica, ponderación de ciertos indicadores con la participación de distintas actividades económicas en el PIB del año anterior. Información extraída desde el banco central.
+    
++ Tasa de Desempleo: Tasa nacional de desocupación entregada por el INE mediante la Encuesta Nacional de Empleo (ENE). Información extraída desde la CMF.
+    
++ Tasa de Interés Interbancaria (TIB):Tasa promedio ponderada diaria de préstamos de reservas bancarias entre bancos, sin colateral. Extraída desde CMF.
+    
++ Tasa de Mercado (TM): Promedio del costo porcentual de captación de los recursos durante el año, más los puntos porcentuales que corresponden a los costos de operación de las instituciones financieras. Extraída desde CMF.
+    
++ PIB: Producto Interno Bruto, valor total de los bienes y servicios finales (esto es, obtenidos por el consumidor final) producidos por el país, se obtiene a partir de la agregación temporal del IMACEC desestacionalizado. Extraído desde BC.
+
++ *Variables dummy*: También llamadas variables indicatrices, reciben esta denominación aquellas variables cuyo valor se fija en cero salvo en aquellos casos en que se cumple una condición previamente definida. En este contexto, se construyeron variables dummy indicando los meses del año, puesto que como se señala en el texto citado anteriormente, el mes del año también es una variable a considerar.
+
+Adicionalmente, se aprecia en la figura 1 una representación gráfica de la matriz correlaciones entre las distintas variables incluyendo la variable respuesta, donde rojo y azul corresponden a $-1$ y $1$ respectivamente. Los colores de las celdas de la diagonal principal fueron retirados intencionalmente para no dificultar visualmente las comparaciones.
+```{r, echo = F}
+cors = cor(DF[,c("SMM","DESEMPLEO","IMACEC","BCU10","PIB","TM","Interbancaria")])
+corrplot(cors, diag = F, method = "square")
+```
+
+Nótese en primer lugar que existe poca correlación entre la variable objetivo (SMM) y las demás variables disponibles. En segundo lugar, es necesario poner atención a algunas correlaciones muy potentes entre regresores (denominación que reciben las variables predictivas en un modelo de regresión) como IMACEC y PIB, lo cual si bien es esperable tratándose de variables macroeconómicas, advierten sobre un posible problema de multi-colinealidad entre ellas. 
