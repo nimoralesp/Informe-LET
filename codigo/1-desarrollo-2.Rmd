@@ -65,5 +65,41 @@ Adicionalmente, se aprecia en la figura 1 una representación gráfica de la mat
 cors = cor(DF[,c("SMM","DESEMPLEO","IMACEC","BCU10","PIB","TM","Interbancaria")])
 corrplot(cors, diag = F, method = "square")
 ```
+Nótese en primer lugar que existe poca correlación entre la variable objetivo (SMM) y las demás variables disponibles. En segundo lugar, es necesario poner atención a algunas correlaciones muy potentes entre regresores (denominación que reciben las variables predictivas en un modelo de regresión) como IMACEC y PIB, lo cual si bien es esperable tratándose de variables macroeconómicas, advierten sobre un posible problema de multi-colinealidad entre ellas.
+```{r, echo=FALSE, results='hide'}
+text_tbl <- data.frame(
+Modelo = c("(1)", "(2)", "(3)",  "(4)", "(5)"),
+Regresores = c(
+"Todas las variables, incluyendo meses más intercepto",
+"Desempleo, IMACEC, PIB, TM, Interbancaria, BCU10, Ene, Feb, Abr, May, Jul, Ago, Oct, Nov",
+"Intercepto, TM, BCU10, Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic",
+"Intercepto, TM, BCU10, Ene, Abr, May, Jul, Ago, Oct, Nov",
+"Intercepto, PIB, TM, BCU10, Ene, Feb, Abr, May, Jul, Ago, Oct, Nov"
+)
+)
+kable(text_tbl, "html", booktabs = T, linesep = "\\addlinespace", 
+      caption = "Modelos lineales\\label{tab:tab_reg}"
+      ) %>%
+kable_styling(full_width = F) %>%
+column_spec(1, bold = T, color = "darkred", width = "15mm") #%>%
+#column_spec(2, width = "55mm")
 
-Nótese en primer lugar que existe poca correlación entre la variable objetivo (SMM) y las demás variables disponibles. En segundo lugar, es necesario poner atención a algunas correlaciones muy potentes entre regresores (denominación que reciben las variables predictivas en un modelo de regresión) como IMACEC y PIB, lo cual si bien es esperable tratándose de variables macroeconómicas, advierten sobre un posible problema de multi-colinealidad entre ellas. 
+```
+
+```{r, echo=FALSE, results='hide'}
+library("kableExtra")
+text_tbl <- data.frame(
+Modelo = c("(1)", "(2)", "(3)",  "(4)", "(5)"),
+R2 = c(0.39336, 0.38897, 0.37906, 0.34989, 0.38792),
+R2aj = c(0.32551, 0.33378, 0.32732, 0.31332, 0.34531),
+AIC = c(-1533.501, -1538.276, -1537.542, -1537.737, -1543.983),
+NS = c("11/19", "5/15", "5/15", "0/10", "0/12")
+)
+head(text_tbl)
+kable(text_tbl, "html", booktabs = T, linesep = "\\addlinespace",
+      caption = "Métricas de bondad de ajuste\\labeltab:metricas}"
+      ) %>%
+kable_styling(full_width = F) %>%
+column_spec(1, bold = T, color = "red")
+
+```
