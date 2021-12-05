@@ -1,0 +1,85 @@
+---
+output: html_document
+bibliography: mi_bib.bib  
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("dplyr")    
+setwd("C:/Users/nicom/Downloads/Informe-LET/datos")
+library("openxlsx")
+library("corrplot")
+library("MASS")
+library("kableExtra")
+library("car")
+
+Data = read.xlsx('SMM.xlsx')
+Data$BCU10 = Data$BCU10E
+DF = na.omit(Data)
+DF$TASA_HIP = NULL
+DF$AÑO = NULL
+DF$MES = NULL
+DF$BCU10E = NULL
+#head(DF)
+attach(DF)
+```
+
+# Proposición de modelos
+La discusión anterior recibe el nombre de *análisis exploratorio*, y sirve como base para proponer posibles modelos. En este trabajo se propone un total de 5 modelos lineales distintos, construidos como se indica en la siguiente tabla:
+
+| |Regresores incluidos (según modelo)|
+|--|:---------------------:|
+|1.| Todas las variables disponibles y además $\beta_0$|
+|2.| Se retiraron los meses no significativos respecto al primer modelo|
+|3.| TM, BCU10, los indicadores para todos los meses y además $\beta_0$|
+|4.| TM, BCU10, sólo indicadores mensuales de ENE, ABR, MAY, JUL, AGO, OCT, NOV, DIC y además $\beta_0$|
+|5.| TM, BCU10, sólo indicadores mensuales de ENE, ABR, MAY, JUL, AGO, OCT, NOV y además $\beta_0$|
+
+
+El procedimiento para la confección de los distintos modelos será el siguiente: Se construyó el primer modelo sin descartar ningún tipo de información. Para el segundo modelo se descartaron las variables indicadoras mensuales que no resultaron significativas así como el intercepto. Para el tercero se hizo lo mismo pero sólo con las variables que no corresponden a meses ni al intercepto. Para el cuarto modelo se hicieron ambas cosas sobre el primer modelo, dejándose el intercepto, en éste último el indicador correspondiente al doceavo mes no resulta significativo, por lo que se hizo un quinto modelo el cual consiste en retirar ésta variable tomando el cuarto como base.
+A continuación se presentan las métricas calculadas para cada modelo a partir de haberse instanciado mediante el software estadístico *R* con el método `lm()` (@package).
+
+```{r, eval = F, include=FALSE}
+R2 = c(0.3933645,0.380628,0.3790695,0.3499093,0.3498966),
+R2aj = c(0.3255171,0.3246847,0.3273253,0.3090231,0.3133283),
+AIC = c(-1533.502,-1535.97,-1537.542,-1535.741,-1537.737),
+NS = c("12/18", "6/15", "4/14", "1/11", "0/10")
+```
+
+```{r, echo=FALSE}
+library("kableExtra")
+text_tbl <- data.frame(
+Modelo = c("(1)", "(2)", "(3)",  "(4)", "(5)"),
+R2 = c("39.33%","38.06%","37.90%","34.99%","34.98%"),
+R2aj = c("32.55%","32.46%","32.73%","30.90%","31.33%"),
+AIC = c(-1533.502,-1535.97,-1537.542,-1535.741,-1537.737),
+NS = c("12/18", "6/15", "4/14", "1/11", "0/10")
+)
+kable(text_tbl, "html", booktabs = T, linesep = "\\addlinespace",
+      caption = "Métricas de bondad de ajuste"
+      ) %>%
+kable_styling(full_width = F) %>%
+column_spec(1, bold = T, color = "red")
+
+```
+
+Se aprecia en la tabla que si bien el quinto modelo no marca un mejor ajuste bajo los criterios $R^2$ y $R_{aj}^2$, sí lo hace por el criterio $AIC$ además de ser el único modelo que no presenta regresores no significativos. Por éstas razones éste modelo es -por el momento- el candidato más fuerte. Ahora es obligación chequear si presenta problemas de colinealidad, ésto se hará con el método `VIF()` (@car).
+
+```{r, results='hide'}
+modelo = lm(SMM ~ 1 + BCU10 + TM + ENE + ABR + MAY + JUL + AGO + OCT + NOV, data = DF)
+```
+
+```{r}
+vif(modelo)
+```
+
+Los regresores que generan problemas de colinealidad son `TM` y `BCU10`, nótese además que esto es consistente con lo mostrado en la matriz de correlaciones. Para solucionar el problema, se construye un nuevo modelo sólo retirando el regresor TM (la desición entre los dos regresores problemáticos es arbitraria, pues se concluye que las variables entregan casi la misma información) el cual es reemplazado por el PIB al ser la variable más inversamente correlacionada además de sumar interpretabilidad al modelo.
+
+```{r}
+modelo.nuevo = lm(SMM ~ 1 + BCU10 + PIB + ENE + ABR + MAY + JUL + AGO + OCT + NOV, data = DF)
+vif(modelo.nuevo)
+```
+
+Al comparar este nuevo modelo con los preexistentes, se obtiene que sus métricas son: $R^2 = 35.15%$, $R_{aj}^2 = 31.5%$, $AIC = -1538.147$, NS: $0/11$. Junto con ser razonablemente cercanas a las del modelo elegido anteriormente -de hecho presenta mejor $R^2$ y AIC-, se aprecia que al aplicar nuevamente el análisis de colinealidad resulta no tener problemas de esta índole. Con todo lo anterior, se puede concluir que, en base a la información exógena recopilada y considerada para este trabajo, el último modelo propuesto es el más óptimo en términos de significancia de los regresores, información redundante y calidad de ajuste.
+
+
+## Referencias

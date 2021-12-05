@@ -1,0 +1,56 @@
+---
+output: html_document
+bibliography: mi_bib.bib  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("dplyr")    
+setwd("C:/Users/nicom/Downloads/Informe-LET/datos")
+library("openxlsx")
+library("corrplot")
+library("MASS")
+library("kableExtra")
+library("car")
+
+Data = read.xlsx('SMM.xlsx')
+Data$BCU10 = Data$BCU10E
+DF = na.omit(Data)
+DF$TASA_HIP = NULL
+DF$AÑO = NULL
+DF$MES = NULL
+DF$BCU10E = NULL
+#head(DF)
+attach(DF)
+```
+
+# Variables predictoras: información
+Tomando como referencia lo realizado en @saito2018mortgage, se recopiló información macro-economica desde el Banco Central de Chile (BC)\footnote{https://www.bcentral.cl} y de la Comisión para el Mercado Financiero de Chile (CMF)\footnote{ http://www.cmfchile.cl}. Se descargaron las series en formato excel y se empastaron a la base de datos sin cambios.
+
++ SMM: Datos correspondientes al índice calculado mensualmente entre los años 2003-2019.
+
++ BCU10: Bonos bullet emitidos por el banco central a plazos de 10 años. Información extraída desde el banco central.
+    
++ IMACEC: Índice mensual de actividad económica, ponderación de ciertos indicadores con la participación de distintas actividades económicas en el PIB del año anterior. Información extraída desde el banco central.
+    
++ Tasa de Desempleo: Tasa nacional de desocupación entregada por el INE mediante la Encuesta Nacional de Empleo (ENE). Información extraída desde la CMF.
+    
++ Tasa de Interés Interbancaria (TIB):Tasa promedio ponderada diaria de préstamos de reservas bancarias entre bancos, sin colateral. Extraída desde CMF.
+    
++ Tasa de Mercado (TM): Promedio del costo porcentual de captación de los recursos durante el año, más los puntos porcentuales que corresponden a los costos de operación de las instituciones financieras. Extraída desde CMF.
+    
++ PIB: Producto Interno Bruto, valor total de los bienes y servicios finales (esto es, obtenidos por el consumidor final) producidos por el país, se obtiene a partir de la agregación temporal del IMACEC desestacionalizado. Extraído desde BC.
+
++ *Variables dummy*: También llamadas variables indicatrices, reciben esta denominación aquellas variables cuyo valor se fija en cero salvo en aquellos casos en que se cumple una condición previamente definida. En este contexto, se construyeron variables dummy indicando los meses del año, puesto que como se señala en el texto citado anteriormente, el mes del año también es una variable a considerar.
+
+
+Adicionalmente, se aprecia en la figura 1 una representación gráfica de la matriz correlaciones entre las distintas variables incluyendo la variable respuesta, donde rojo y azul corresponden a $-1$ y $1$ respectivamente. Los colores de las celdas de la diagonal principal fueron retirados intencionalmente para no dificultar visualmente las comparaciones.
+
+```{r, echo = F}
+cors = cor(DF[,c("SMM","DESEMPLEO","IMACEC","BCU10","PIB","TM","Interbancaria")])
+corrplot(cors, diag = F, method = "square")
+```
+
+A simple vista se aprecia poca correlación entre la variable objetivo (SMM) y las demás variables disponibles. No obstante, en la práctica es frecuente considerar que una correlación es alta si es mayor o igual a 0.5, por lo que no es del todo útil la comparación con otras parejas de variables con correlaciones muy altas. De hecho, podría resultar ser una situación indeseable: Nótese algunas correlaciones más potentes entre regresores como IMACEC y PIB, si bien es esperable dicho resultado tratándose de variables macroeconómicas, advierten sobre un posible problema de multi-colinealidad entre ellas.
+
+## Referencias

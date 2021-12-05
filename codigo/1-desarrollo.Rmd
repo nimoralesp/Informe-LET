@@ -3,9 +3,11 @@ output: html_document
 bibliography: mi_bib.bib  
 ---
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library("dplyr")    
 setwd("C:/Users/nicom/Downloads/Informe-LET/datos")
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "../output")
+library("dplyr")    
+
 library("openxlsx")
 library("corrplot")
 library("MASS")
