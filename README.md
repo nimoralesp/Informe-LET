@@ -9,7 +9,6 @@ Tanto la temática del informe como su estructura se encuentran detalladas en la
 ## Índice temático
 
 + [Resumen](https://nimoralesp.github.io/Informe-LET/output/0-resumen.html)
-Aquí irá mi resumen.
 + [Introducción](https://nimoralesp.github.io/Informe-LET/output/1-introduccion.html)
 + Desarrollo del informe:
     + [Metodología](https://nimoralesp.github.io/Informe-LET/output/2-metodologia.html)
