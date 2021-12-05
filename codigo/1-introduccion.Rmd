@@ -1,0 +1,27 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introducción
+
+Los créditos hipotecarios son contratos entre dos entidades, generalmente entre una institución financiera y personas naturales o empresas, con la finalidad de permitir a la segunda parte la obtención de una cierta suma de dinero.
+Estos contratos estipulan determinado plazo y tasa de interés para la devolución del dinero. Adicionalmente, se establecen ciertas flexibilidades, entre las cuales destaca la posibilidad del **prepago** parcial o total del crédito recibido, esto es, el pago anticipado del monto adeudado o bien de una parte del mismo.
+
+Ésta posibilidad de prepago tiene ciertas implicancias para los emisores de créditos, pues **su modelamiento es crucial para predecir potenciales pérdidas**, debido a la incertidumbre de su duración a priori respecto a su duración real, teniendo en cuenta la recaudación por intereses. Así, las instituciones crediticias necesitan contar con la capacidad y la información necesaria para predecir las tasas de prepagos de sus créditos.
+Por estas razones es que existe una basta literatura especializada en este tema, la que ha servido tanto como guía para la recolección de datos así como para fundamentar la metodología que aquí se propone.
+
+El objetivo de este trabajo es **evaluar** estadísticamente el peso de distintos indicadores económicos señaladas en la literatura como relevantes para el modelado de tasas de prepago mensuales en una cierta cartera de clientes. Se espera finalmente poder **discriminar** las variables que resultan estadísticamente significativas de aquellas que no lo son. Las conclusiones serán especialmente útiles a quienes con fines productivos o académicos desean construir modelos estadísticos.
+
+Para una mejor comprensión del tema se ha dispuesto que este trabajo tendrá la siguiente estructura:
+
+\begin{enumerate}
+\item **Metodología**: Éste primer capítulo comienza presentando la metodología a seguir además de algunas definiciones básicas necesarias pertenecientes tanto al ámbito económico como estadístico.
+\item **Variables predictoras: información**: Aquí se detalla la información recopilada que se evaluará: definiciones de cada variable así como un breve análisis de sus relaciones.
+\item **Proposición de modelos**: Corresponde al análisis estadístico en el que se propondrán distintos modelos lineales sobre los cuales se harán análisis de significancia y distintas comparaciones.
+\end{enumerate}
+
+El informe concluirá no solo presentando los resultados junto a una breve discusión de los mismos, sino también con un **Anexo** en el cual se adjuntan los códigos y salidas computacionales que no fueron incluidas en el capítulo de modelado. Resulta evidente que éste apartado será solo abordable para el lector(a) con un conocimiento previo del software estadístico, se adjunta principalmente con un propósito de transparencia.

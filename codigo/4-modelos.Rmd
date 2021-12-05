@@ -35,7 +35,7 @@ La discusión anterior recibe el nombre de *análisis exploratorio*, y sirve com
 |5.| TM, BCU10, sólo indicadores mensuales de ENE, ABR, MAY, JUL, AGO, OCT, NOV y además $\beta_0$|
 
 
-El procedimiento para la confección de los distintos modelos será el siguiente: Se construyó el primer modelo sin descartar ningún tipo de información. Para el segundo modelo se descartaron las variables indicadoras mensuales que no resultaron significativas así como el intercepto. Para el tercero se hizo lo mismo pero sólo con las variables que no corresponden a meses ni al intercepto. Para el cuarto modelo se hicieron ambas cosas sobre el primer modelo, dejándose el intercepto, en éste último el indicador correspondiente al doceavo mes no resulta significativo, por lo que se hizo un quinto modelo el cual consiste en retirar ésta variable tomando el cuarto como base.
+El procedimiento para la confección de los distintos modelos será el siguiente: Se construyó el primer modelo sin descartar ningún tipo de información. Para el segundo modelo se descartaron las variables indicadoras mensuales que no resultaron significativas así como el intercepto. Para el tercero se hizo lo mismo pero sólo con las variables que no corresponden a meses ni al intercepto. Para el cuarto modelo se hicieron ambas cosas sobre el primer modelo, dejándose el intercepto, en éste último el indicador correspondiente al doceavo mes no resulta significativo, por lo que se hizo un quinto modelo el cual consiste en retirar ésta variable tomando el cuarto como base. La implementación explícita de los mismos se adjunta en el anexo.
 A continuación se presentan las métricas calculadas para cada modelo a partir de haberse instanciado mediante el software estadístico *R* con el método `lm()` (@package).
 
 ```{r, eval = F, include=FALSE}
@@ -79,6 +79,11 @@ modelo.nuevo = lm(SMM ~ 1 + BCU10 + PIB + ENE + ABR + MAY + JUL + AGO + OCT + NO
 vif(modelo.nuevo)
 ```
 
+$$
+\begin{align*}
+SMM &\sim \beta_0 + \beta_1{BCU}_{10} + \beta_2PIB + \beta_3\delta_{mes}(Enero) \\ & \quad+ \beta_4\delta_{mes}(Abril) + \beta_4\delta_{mes}(Mayo) + \beta_5\delta_{mes}(Julio)\\ & \quad + \beta_6\delta_{mes}(Agosto) + \beta_7\delta_{mes}(Octubre) + \beta_8\delta_{mes}(Noviembre)
+\end{align*}
+$$
 Al comparar este nuevo modelo con los preexistentes, se obtiene que sus métricas son: $R^2 = 35.15%$, $R_{aj}^2 = 31.5%$, $AIC = -1538.147$, NS: $0/11$. Junto con ser razonablemente cercanas a las del modelo elegido anteriormente -de hecho presenta mejor $R^2$ y AIC-, se aprecia que al aplicar nuevamente el análisis de colinealidad resulta no tener problemas de esta índole. Con todo lo anterior, se puede concluir que, en base a la información exógena recopilada y considerada para este trabajo, el último modelo propuesto es el más óptimo en términos de significancia de los regresores, información redundante y calidad de ajuste.
 
 

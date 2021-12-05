@@ -1,0 +1,7 @@
+---
+output: html_document
+---
+
+# Resumen
+
+Aquí va el resumen o abstract.

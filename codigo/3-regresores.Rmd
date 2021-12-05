@@ -27,7 +27,7 @@ attach(DF)
 # Variables predictoras: información
 Tomando como referencia lo realizado en @saito2018mortgage, se recopiló información macro-economica desde el Banco Central de Chile (BC)\footnote{https://www.bcentral.cl} y de la Comisión para el Mercado Financiero de Chile (CMF)\footnote{ http://www.cmfchile.cl}. Se descargaron las series en formato excel y se empastaron a la base de datos sin cambios.
 
-+ SMM: Datos correspondientes al índice calculado mensualmente entre los años 2003-2019.
++ SMM: Datos correspondientes al índice calculado mensualmente entre los años 2003-2019. Se trata de la variable respuesta que se modelará en este trabajo.
 
 + BCU10: Bonos bullet emitidos por el banco central a plazos de 10 años. Información extraída desde el banco central.
     
@@ -41,12 +41,25 @@ Tomando como referencia lo realizado en @saito2018mortgage, se recopiló informa
     
 + PIB: Producto Interno Bruto, valor total de los bienes y servicios finales (esto es, obtenidos por el consumidor final) producidos por el país, se obtiene a partir de la agregación temporal del IMACEC desestacionalizado. Extraído desde BC.
 
-+ *Variables dummy*: También llamadas variables indicatrices, reciben esta denominación aquellas variables cuyo valor se fija en cero salvo en aquellos casos en que se cumple una condición previamente definida. En este contexto, se construyeron variables dummy indicando los meses del año, puesto que como se señala en el texto citado anteriormente, el mes del año también es una variable a considerar.
++ *Variables dummy*: También llamadas variables indicatrices, reciben esta denominación aquellas variables cuyo valor se fija en cero salvo en aquellos casos en que se cumple una condición previamente definida. En este contexto, se construyeron variables dummy indicando los meses del año, puesto que como se señala en el texto citado anteriormente, el mes del año también es una variable a considerar. Una forma de representarlas matemáticamente es definiendo la función $\delta_x$ como sigue:
+$$
+\delta_x(x_0)= \left\{ \begin{array}{lcc}
+             1 &   \text{si } x = x_0\\
+             0 &   \text{en caso contrario} \\
+             \end{array}
+   \right.
+$$
 
+Se comenzará por adjuntar una visualización del comportamiento de la variable SMM a modelar:
+```{r plot, echo=FALSE,fig.cap="Figura 1: SMM (2003-2019)",warning=FALSE}
+
+ts.plot(ts(DF$SMM, start = c(2003,1), frequency = 12), col = "darkcyan", ylab = "SMM", xlab = "Año", lwd = 2,bty="n")
+
+```
 
 Adicionalmente, se aprecia en la figura 1 una representación gráfica de la matriz correlaciones entre las distintas variables incluyendo la variable respuesta, donde rojo y azul corresponden a $-1$ y $1$ respectivamente. Los colores de las celdas de la diagonal principal fueron retirados intencionalmente para no dificultar visualmente las comparaciones.
 
-```{r, echo = F}
+```{r, echo = F, fig.cap="Figura 2: Matriz de correlaciones"}
 cors = cor(DF[,c("SMM","DESEMPLEO","IMACEC","BCU10","PIB","TM","Interbancaria")])
 corrplot(cors, diag = F, method = "square")
 ```

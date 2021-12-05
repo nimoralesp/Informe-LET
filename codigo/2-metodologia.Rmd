@@ -5,11 +5,12 @@ bibliography: mi_bib.bib
 # Metodología
 
 En la literatura suele referirse a los prepagos mediante un indicador denominado
-Conditional Prepayment Rate (${CPR}_t$) que surge de anualizar\footnote{Se realizan los cálculos asumiendo que la cantidad obtenida en el mes observado será constante para todos los meses del año.} la tasa de prepago observada en el mes $t$, denominada Single Monthly Mortality Rate (${SMM}_t$):
+Conditional Prepayment Rate (${CPR}_t$) que surge de anualizar (extrapolar asumiendo que la cantidad obtenida en el mes observado será constante para todos los meses del año) la tasa de prepago observada en el mes $t$, denominada Single Monthly Mortality Rate (${SMM}_t$):
 $${SMM}_t = \frac{\sum^{n}_{i=1}{Prepago}_{it}}{\sum^{n}_{i=1}{({Saldo}_{it} - {Amortización}_{it})}}$$
-donde $n$ representa el número de préstamos vigentes en el mes $t$, ${Prepago}_{it}$ el
-monto pre-pagado (total o parcial) por cada crédito, ${Saldo}_{it}$ el saldo de deuda al
-inicio del mes y ${Amortización}_{it}$ la amortización (parte ya pagada de la deuda) programada para dicho período. La anualización de la SMM se obtiene de la siguiente expresión:
+donde $n$ representa el total de préstamos vigentes en el mes $t$, ${Prepago}_{it}$ el
+monto pre-pagado (total o parcial) por el $i$-ésimo crédito en el mes $t$, ${Saldo}_{it}$ su saldo de deuda al
+inicio del mes y ${Amortización}_{it}$ su amortización (parte ya pagada de la deuda) programada para dicho período. El símbolo $\Sigma_{i=1}^n$ recibe el nombre de *sumatoria* y denota la suma de los términos para todos los valores indicados para $i$. Por ejemplo, en el caso del numerador, se tiene la suma de todos los montos pre-pagados de los $n$ créditos vigentes durante el $t$-ésimo mes.
+La anualización de la SMM se obtiene de la siguiente expresión:
 $${CPR}_t = 1 - (1-{SMM}_t)^{12}$$
 Las series históricas de prepagos pueden ser explicadas también por factores exógenos, como variables financieras y macro-económicas. En el presente informe se ajustarán distintos modelos lineales para el $SMM$ mensual (elaborados por tanteo a partir del primero, en torno a las características que se detallarán), con el objetivo de comparar características que se detallarán más adelante.
 A continuación, se definirán algunos conceptos clave para el correcto entendimiento del trabajo aquí presentado (En caso de que la lectora -o el lector- cuente con conocimientos de estadística, se aconseja avanzar directamente a la siguiente sección):
