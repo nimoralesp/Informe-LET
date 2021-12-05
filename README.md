@@ -8,7 +8,7 @@ Tanto la temática del informe como su estructura se encuentran detalladas en la
 
 ## Índice temático
 
-#### [Resumen]()
-#### [Introducción](https://nimoralesp.github.io/Informe-LET/output/0-introduccion.html)
-#### [Desarrollo](https://nimoralesp.github.io/Informe-LET/output/1-desarrollo-2.html)
++ [Resumen]()
++ [Introducción](https://nimoralesp.github.io/Informe-LET/output/0-introduccion.html)
++ [Desarrollo](https://nimoralesp.github.io/Informe-LET/output/1-desarrollo.html)
 
