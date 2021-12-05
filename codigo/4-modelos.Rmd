@@ -79,12 +79,6 @@ modelo.nuevo = lm(SMM ~ 1 + BCU10 + PIB + ENE + ABR + MAY + JUL + AGO + OCT + NO
 vif(modelo.nuevo)
 ```
 
-$$
-\begin{align*}
-SMM &\sim \beta_0 + \beta_1{BCU}_{10} + \beta_2PIB + \beta_3\delta_{mes}(Enero) \\ & \quad+ \beta_4\delta_{mes}(Abril) + \beta_4\delta_{mes}(Mayo) + \beta_5\delta_{mes}(Julio)\\ & \quad + \beta_6\delta_{mes}(Agosto) + \beta_7\delta_{mes}(Octubre) + \beta_8\delta_{mes}(Noviembre)
-\end{align*}
-$$
-Al comparar este nuevo modelo con los preexistentes, se obtiene que sus métricas son: $R^2 = 35.15%$, $R_{aj}^2 = 31.5%$, $AIC = -1538.147$, NS: $0/11$. Junto con ser razonablemente cercanas a las del modelo elegido anteriormente -de hecho presenta mejor $R^2$ y AIC-, se aprecia que al aplicar nuevamente el análisis de colinealidad resulta no tener problemas de esta índole. Con todo lo anterior, se puede concluir que, en base a la información exógena recopilada y considerada para este trabajo, el último modelo propuesto es el más óptimo en términos de significancia de los regresores, información redundante y calidad de ajuste.
-
+Al comparar este nuevo modelo con los preexistentes, se obtiene que sus métricas son: $R^2 = 35.15%$, $R_{aj}^2 = 31.5%$, $AIC = -1538.147$, NS: $0/11$. Junto con ser razonablemente cercanas a las del modelo elegido anteriormente -de hecho presenta mejor $R^2$ y AIC-, se aprecia que al aplicar nuevamente el análisis de colinealidad resulta no tener problemas de esta índole. 
 
 ## Referencias

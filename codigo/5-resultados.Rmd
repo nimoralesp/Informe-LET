@@ -1,0 +1,13 @@
+---
+output: html_document
+---
+
+# Resultados respecto a los modelos lineales.
+
+A la luz de los resultados anteriores, se infiere que en base a la información exógena recopilada y considerada para este trabajo, el último modelo propuesto es el más óptimo en términos de significancia de los regresores, información redundante y calidad de ajuste. Es decir, el índice $SMM$ puede modelarse como sigue:
+
+$$
+\begin{align*}
+SMM &\sim \beta_0 + \beta_1{BCU}_{10} + \beta_2PIB + \beta_3\delta_{mes}(Enero) \\ & \quad+ \beta_4\delta_{mes}(Abril) + \beta_5\delta_{mes}(Mayo) + \beta_6\delta_{mes}(Julio)\\ & \quad + \beta_7\delta_{mes}(Agosto) + \beta_8\delta_{mes}(Octubre) + \beta_9\delta_{mes}(Noviembre)
+\end{align*}
+$$

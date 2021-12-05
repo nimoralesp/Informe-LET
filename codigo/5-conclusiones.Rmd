@@ -1,7 +1,0 @@
----
-output: html_document
-bibliography: mi_bib.bib  
----
-
-# Conclusiones
-

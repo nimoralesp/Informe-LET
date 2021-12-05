@@ -25,11 +25,11 @@ attach(DF)
 ```
 
 # Variables predictoras: información
-Tomando como referencia lo realizado en @saito2018mortgage, se recopiló información macro-economica desde el Banco Central de Chile (BC)\footnote{https://www.bcentral.cl} y de la Comisión para el Mercado Financiero de Chile (CMF)\footnote{ http://www.cmfchile.cl}. Se descargaron las series en formato excel y se empastaron a la base de datos sin cambios.
+Tomando como referencia lo realizado en @saito2018mortgage, se recopiló información macro-economica desde el [Banco Central de Chile (BC)](https://www.bcentral.cl) y de la Comisión para el [Mercado Financiero de Chile (CMF)](http://www.cmfchile.cl). Se descargaron las series en formato excel y se empastaron a la base de datos sin cambios.
 
 + SMM: Datos correspondientes al índice calculado mensualmente entre los años 2003-2019. Se trata de la variable respuesta que se modelará en este trabajo.
 
-+ BCU10: Bonos bullet emitidos por el banco central a plazos de 10 años. Información extraída desde el banco central.
++ BCU10: Bonos bullet emitidos por el banco central a plazos de 10 años. Un bono bullet es una modalidad de deuda en la cual se estipula una fecha en la que se debe pagar nada más que el monto pedido en su totalidad, y hasta dicha fecha solo se pagan cuotas periódicas correspondientes a intereses de dicho préstamo. Información extraída desde el banco central.
     
 + IMACEC: Índice mensual de actividad económica, ponderación de ciertos indicadores con la participación de distintas actividades económicas en el PIB del año anterior. Información extraída desde el banco central.
     

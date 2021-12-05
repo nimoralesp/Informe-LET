@@ -4,4 +4,4 @@ output: html_document
 
 # Resumen
 
-Aquí va el resumen o abstract.
+Se hizo un análisis de significancia de indicadores económicos recopilados desde instituciones financieras para el modelado de tasas de prepago de una cierta cartera de clientes. Se propuso un total de 6 modelos de los cuales el último resulta ser el más óptimo en términos de significancia y calidad de ajuste. Finalmente se concluyó que los indicadores más significativos son los bonos bullet a 10 años y el PIB aunque también se ve influencia de ciertos meses del año. Se ofrece al final una posible explicación para los resultados.

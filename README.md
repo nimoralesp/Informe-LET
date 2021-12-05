@@ -11,10 +11,11 @@ Tanto la temática del informe como su estructura se encuentran detalladas en la
 + [Resumen](https://nimoralesp.github.io/Informe-LET/output/0-resumen.html)
 Aquí irá mi resumen.
 + [Introducción](https://nimoralesp.github.io/Informe-LET/output/1-introduccion.html)
-+ [Desarrollo]
++ Desarrollo del informe:
     + [Metodología](https://nimoralesp.github.io/Informe-LET/output/2-metodologia.html)
     + [Variables predictoras (información)](https://nimoralesp.github.io/Informe-LET/output/3-regresores.html)
     + [Proposición de modelos](https://nimoralesp.github.io/Informe-LET/output/4-modelos.html)
-+ [Conclusiones](https://nimoralesp.github.io/Informe-LET/output/5-conclusiones.html)
-+ [Anexo](https://nimoralesp.github.io/Informe-LET/output/6-anexo.html)
+    + [Resultados](https://nimoralesp.github.io/Informe-LET/output/5-resultados.html)
++ [Conclusiones](https://nimoralesp.github.io/Informe-LET/output/6-conclusiones.html)
++ [Anexo](https://nimoralesp.github.io/Informe-LET/output/7-anexo.html)
 

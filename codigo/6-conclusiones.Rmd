@@ -1,0 +1,11 @@
+---
+output: html_document
+bibliography: mi_bib.bib  
+---
+
+# Conclusiones
+
+En este trabajo se ha mostrado, conforme a lo expuesto en la literatura, que para modelar la tasa de prepagos en una cierta cartera de clientes es adecuado apoyarse en información adicional como indicadores económicos e información histórica. Sin embargo, es prudente analizar la influencia las distintas variables seleccionadas en contexto con las demás, pues la información puede ser redundante o puede no ser significativa.
+Tomando en cuenta su significancia en los distintos modelos, así como la bondad de ajuste del modelo final, se concluye que de entre los distintos indicadores financieros y/o macroeconómicos seleccionados para modelar las tasas de prepago, los más significativos son los **bonos bullet emitidos por el banco central a 10 años (`BCU10`)** y el **producto interno bruto (PIB)**. 
+Una posible explicación es que los primeros son una modalidad de deuda que es especialmente útil como fuente de dinero destinable a prepagar otro crédito en tanto que proporciona certeza frente al comportamiento siempre contingente de las tasas de interés, mientras que el PIB al medir el valor de los bienes y servicios adquiridos por las personas, tiene por construcción una fuerte correlación con el poder adquisitivo de las personas, y por ende, con su capacidad de pago. 
+Se debe tener en cuenta también el comportamiento anterior de las tasas de prepago según los meses del año, si bien ninguno de los meses señalados como significativos tiene alguna característica destacable a simple vista, podría ser ésta misma la razón por la que se encuentran ahí, puesto que los meses no seleccionados (Febrero, Marzo, Junio, Septiembre, Diciembre) resultan abarcar meses de vacaciones y temporadas festivas, en las que presumiblemente aumentan otros tipos de gastos en desmedro de pagos anticipados.
