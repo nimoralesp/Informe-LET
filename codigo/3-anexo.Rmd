@@ -1,0 +1,85 @@
+---
+title: "Anexo"
+author: "Nico"
+date: "05-12-2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("openxlsx")
+setwd("C:/Users/nicom/Downloads/Informe-LET/datos")
+Data = read.xlsx('SMM.xlsx')
+Data$BCU10 = Data$BCU10E
+DF = na.omit(Data)
+DF$TASA_HIP = NULL
+DF$AÑO = NULL
+DF$MES = NULL
+DF$BCU10E = NULL
+#head(DF)
+attach(DF)
+```
+
+## Implementación de modelos
+```{r}
+modelo01 = lm(SMM ~ ., data = DF)
+modelo02 = lm(SMM ~ .-FEB-MAR-JUN-SEPT, data = DF)
+modelo03 = lm(SMM ~ .-DESEMPLEO-IMACEC-PIB-Interbancaria, data = DF)
+modelo04 = lm(SMM ~ .-DESEMPLEO-IMACEC-PIB-Interbancaria-FEB-MAR-JUN-SEPT, data = DF)
+modelo05 = lm(SMM ~ .-DESEMPLEO-IMACEC-PIB-Interbancaria-FEB-MAR-JUN-SEPT-DIC, data = DF)
+```
+
+### Significancia
+
+Se construye el método `no_significativos` el cual retorna los nombres de los regresores que no resultan significativos bajo el criterio del valor-p. Sin embargo, pese a que se considera la cota 0.05 por convención, la función usa 0.06 ya que al verse influido el valor-p por las variables presentes en el modelo, se decidió darle una tolerancia de 0.01 puesto que estos valores *casi significativos* en general pasan a serlo en cuanto se retiran otros factores que no lo son.
+
+```{r}
+no_significativos = function(fit){
+  names(which(summary(fit)$coefficients[,4] > 0.06))
+}
+```
+#### Primer modelo:
+```{r}
+no_significativos(modelo01)
+```
+#### Segundo modelo:
+```{r}
+no_significativos(modelo02)
+```
+#### Tercer modelo:
+```{r}
+no_significativos(modelo03)
+```
+#### Cuarto modelo:
+```{r}
+no_significativos(modelo04)
+```
+#### Quinto modelo:
+```{r}
+no_significativos(modelo05)
+```
+
+### $R^2$
+```{r}
+summary(modelo01)$r.squared
+summary(modelo02)$r.squared
+summary(modelo03)$r.squared
+summary(modelo04)$r.squared
+summary(modelo05)$r.squared
+```
+### $R_{adj}^2$
+```{r}
+summary(modelo01)$adj.r.squared
+summary(modelo02)$adj.r.squared
+summary(modelo03)$adj.r.squared
+summary(modelo04)$adj.r.squared
+summary(modelo05)$adj.r.squared
+```
+### AIC
+```{r}
+AIC(modelo01)
+AIC(modelo02)
+AIC(modelo03)
+AIC(modelo04)
+AIC(modelo05)
+```

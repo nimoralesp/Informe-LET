@@ -1,8 +1,14 @@
-# Informe-LET
+# Variables significativas para la predicción de la tasa de prepagos de créditos hipotecarios
 
-La estructura está basada en la propuesta en la tarea. Se agregaron algunos archivos que tienen relación con un trabajo previo sobre este mismo tema, pero que no pretenden ser cita en el informe que se escribirá, sino que su único propósito es poner información a la mano.
-Se agregaron también archivos auxiliares con la finalidad de que se muestren carpetas que en realidad están vacías.
+Estimado/a lector/a:
 
-## Modificación desde el PC
+El presente trabajo corresponde a una tarea para la asignatura **Habilidades comunicativas para estadísticos (LET0010-1)** con la profesora Riva Quiroga dictado el segundo semestre de 2021. Cada carpeta en el repositorio incluye una breve descripción de lo que en ella se puede encontrar.
+Tanto la temática del informe como su estructura se encuentran detalladas en la introducción. Para el consumo del informe se dispone el siguiente índice a través del cual es posible acceder a cada sección.
 
-Ésta línea la escribí desde el computador
+
+## Índice temático
+
+#### (Resumen)[]
+#### (Introducción)[https://nimoralesp.github.io/Informe-LET/output/0-introduccion.html]
+#### (Desarrollo)[https://nimoralesp.github.io/Informe-LET/output/1-desarrollo-2.html]
+
